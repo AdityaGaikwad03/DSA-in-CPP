@@ -1,0 +1,57 @@
+//Practical no 6
+Menu:
+1. Insert at Beginning
+2. Insert at End
+3. Insert at Position
+4. Display
+5. Exit
+Enter your choice: 1
+Enter value to insert at beginning: 78
+
+Menu:
+1. Insert at Beginning
+2. Insert at End
+3. Insert at Position
+4. Display
+5. Exit
+Enter your choice: 2
+Enter value to insert at end: 65
+
+Menu:
+1. Insert at Beginning
+2. Insert at End
+3. Insert at Position
+4. Display
+5. Exit
+Enter your choice: 1
+Enter value to insert at beginning: 48
+
+Menu:
+1. Insert at Beginning
+2. Insert at End
+3. Insert at Position
+4. Display
+5. Exit
+Enter your choice: 3
+Enter value to insert: 2
+Enter position: 62
+Position out of bounds. Inserting at end.
+
+Menu:
+1. Insert at Beginning
+2. Insert at End
+3. Insert at Position
+4. Display
+5. Exit
+Enter your choice: 4
+48 -> 78 -> 65 -> 2 -> NULL
+
+Menu:
+1. Insert at Beginning
+2. Insert at End
+3. Insert at Position
+4. Display
+5. Exit
+Enter your choice: 48 -> 78 -> 65 -> 2 -> 
+
+

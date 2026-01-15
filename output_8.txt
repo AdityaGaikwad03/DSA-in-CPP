@@ -1,0 +1,5 @@
+[Running] cd "c:\Users\gaikw\Desktop\aditya\MCA_PRACTICALS\MCA_CPP_PRACTICALS\" && g++ PRACTICAL_8.cpp -o PRACTICAL_8 && "c:\Users\gaikw\Desktop\aditya\MCA_PRACTICALS\MCA_CPP_PRACTICALS\"PRACTICAL_8
+Circular Linked List: 10 20 30 
+After deleting 20: 10 30 
+
+[Done] exited with code=0 in 16.879 seconds
