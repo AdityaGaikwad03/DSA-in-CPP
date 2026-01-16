@@ -1,0 +1,157 @@
+// Practical 6: Implement singly linked with the following operations - insert at beginning, end and at a given position.
+
+
+
+#include <iostream.h>
+#include <conio.h>
+#include <stdlib.h>
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+void insertAtBeginning(struct Node *&head, int value)
+{
+    struct Node *newNode;
+    newNode = (struct Node *)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = head;
+    head = newNode;
+}
+
+void insertAtEnd(struct Node *&head, int value)
+{
+    struct Node *newNode, *temp;
+    newNode = (struct Node *)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (head == NULL)
+    {
+        head = newNode;
+        return;
+    }
+
+    temp = head;
+    while (temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+}
+
+void insertAtPosition(struct Node *&head, int value, int position)
+{
+    int i;
+    struct Node *newNode, *temp;
+
+    if (position <= 1)
+    {
+        insertAtBeginning(head, value);
+        return;
+    }
+
+    newNode = (struct Node *)malloc(sizeof(struct Node));
+    newNode->data = value;
+
+    temp = head;
+    for (i = 1; i < position - 1 && temp != NULL; i++)
+        temp = temp->next;
+
+    if (temp == NULL)
+    {
+        cout << "Position out of bounds. Inserting at end." << endl;
+        insertAtEnd(head, value);
+        free(newNode);
+        return;
+    }
+
+    newNode->next = temp->next;
+    temp->next = newNode;
+}
+
+void display(struct Node *head)
+{
+    struct Node *temp;
+
+    if (head == NULL)
+    {
+        cout << "List is empty." << endl;
+        return;
+    }
+
+    temp = head;
+    while (temp != NULL)
+    {
+        cout << temp->data << " -> ";
+        temp = temp->next;
+    }
+    cout << "NULL" << endl;
+}
+
+void main()
+{
+    struct Node *head = NULL;
+    int choice, value, pos;
+
+    clrscr();
+
+    while (1)
+    {
+        cout << "\nMenu:\n";
+        cout << "1. Insert at Beginning\n";
+        cout << "2. Insert at End\n";
+        cout << "3. Insert at Position\n";
+        cout << "4. Display\n";
+        cout << "5. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            cout << "Enter value to insert at beginning: ";
+            cin >> value;
+            insertAtBeginning(head, value);
+            break;
+
+        case 2:
+            cout << "Enter value to insert at end: ";
+            cin >> value;
+            insertAtEnd(head, value);
+            break;
+
+        case 3:
+            cout << "Enter value to insert: ";
+            cin >> value;
+            cout << "Enter position: ";
+            cin >> pos;
+            insertAtPosition(head, value, pos);
+            break;
+
+        case 4:
+            display(head);
+            break;
+
+        case 5:
+            cout << "Exiting...";
+            getch();
+            return;
+
+        default:
+            cout << "Invalid choice!";
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+

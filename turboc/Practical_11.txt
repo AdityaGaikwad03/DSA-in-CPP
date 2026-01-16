@@ -1,0 +1,317 @@
+// Practical 11: Implement the following sorting algorithms - bubble sort, selection sort, insertion sort, merge sort and quick sort.
+
+
+
+
+ /* Bubble Sort */
+
+
+#include <iostream.h>
+#include <conio.h>
+
+void main()
+{
+    int n, i, j, temp;
+    int a[100];
+
+    clrscr();
+
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    cout << "Enter " << n << " elements:\n";
+    for (i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
+
+   
+    for (i = 0; i < n - 1; i++)
+    {
+        for (j = 0; j < n - i - 1; j++)
+        {
+            if (a[j] > a[j + 1])
+            {
+                temp = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = temp;
+            }
+        }
+    }
+
+    cout << "Sorted array: ";
+    for (i = 0; i < n; i++)
+    {
+        cout << a[i] << " ";
+    }
+
+    getch();
+}
+
+
+
+
+
+    /* Selection Sort */
+
+
+
+#include <iostream.h>
+#include <conio.h>
+
+void main()
+{
+    int n, i, j, minIndex, temp;
+    int a[100];
+
+    clrscr();
+
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    cout << "Enter " << n << " elements:\n";
+    for (i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
+
+
+    for (i = 0; i < n - 1; i++)
+    {
+        minIndex = i;
+        for (j = i + 1; j < n; j++)
+        {
+            if (a[j] < a[minIndex])
+            {
+                minIndex = j;
+            }
+        }
+
+        temp = a[i];
+        a[i] = a[minIndex];
+        a[minIndex] = temp;
+    }
+
+    cout << "Sorted array: ";
+    for (i = 0; i < n; i++)
+    {
+        cout << a[i] << " ";
+    }
+
+    getch();
+}
+
+
+
+
+
+
+    /* Insertion Sort */
+
+
+
+
+#include <iostream.h>
+#include <conio.h>
+
+void main()
+{
+    int n, i, j, key;
+    int a[100];
+
+    clrscr();
+
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    cout << "Enter " << n << " elements:\n";
+    for (i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
+
+
+    for (i = 1; i < n; i++)
+    {
+        key = a[i];
+        j = i - 1;
+
+        while (j >= 0 && a[j] > key)
+        {
+            a[j + 1] = a[j];
+            j--;
+        }
+
+        a[j + 1] = key;
+    }
+
+    cout << "Sorted array: ";
+    for (i = 0; i < n; i++)
+    {
+        cout << a[i] << " ";
+    }
+
+    getch();
+}
+
+
+
+
+
+
+
+    /* Merge Sort */
+
+
+
+
+#include <iostream.h>
+#include <conio.h>
+
+#define MAX 100
+
+void merge(int arr[], int left, int mid, int right)
+{
+    int i, j, k;
+    int L[MAX], R[MAX];
+
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    for (i = 0; i < n1; i++)
+        L[i] = arr[left + i];
+
+    for (j = 0; j < n2; j++)
+        R[j] = arr[mid + 1 + j];
+
+    i = 0;
+    j = 0;
+    k = left;
+
+    while (i < n1 && j < n2)
+    {
+        if (L[i] <= R[j])
+            arr[k++] = L[i++];
+        else
+            arr[k++] = R[j++];
+    }
+
+    while (i < n1)
+        arr[k++] = L[i++];
+
+    while (j < n2)
+        arr[k++] = R[j++];
+}
+
+void mergeSort(int arr[], int left, int right)
+{
+    int mid;
+    if (left < right)
+    {
+        mid = (left + right) / 2;
+
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+
+        merge(arr, left, mid, right);
+    }
+}
+
+void main()
+{
+    int arr[7] = {64, 34, 25, 12, 22, 11, 90};
+    int n = 7;
+    int i;
+
+    clrscr();
+
+    mergeSort(arr, 0, n - 1);
+
+    cout << "Sorted array: ";
+    for (i = 0; i < n; i++)
+        cout << arr[i] << " ";
+
+    getch();
+}
+
+
+
+
+
+
+
+    /* Quick Sort */
+
+
+
+
+
+#include <iostream.h>
+#include <conio.h>
+
+void swap(int *a, int *b)
+{
+    int temp;
+    temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int partition(int arr[], int low, int high)
+{
+    int pivot, i, j;
+
+    pivot = arr[high];
+    i = low - 1;
+
+    for (j = low; j < high; j++)
+    {
+        if (arr[j] < pivot)
+        {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+
+    swap(&arr[i + 1], &arr[high]);
+    return i + 1;
+}
+
+void quickSort(int arr[], int low, int high)
+{
+    int pi;
+
+    if (low < high)
+    {
+        pi = partition(arr, low, high);
+
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+void main()
+{
+    int arr[7] = {64, 34, 25, 12, 22, 11, 90};
+    int n = 7;
+    int i;
+
+    clrscr();
+
+    quickSort(arr, 0, n - 1);
+
+    cout << "Sorted array: ";
+    for (i = 0; i < n; i++)
+        cout << arr[i] << " ";
+
+    getch();
+}
+
+
+
+
+
+
+
+
+

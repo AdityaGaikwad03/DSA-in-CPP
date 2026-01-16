@@ -1,0 +1,138 @@
+// Practical 2: Implement stack using arrays with push, pop, peek and display operations.
+
+
+
+#include <iostream.h>
+#include <conio.h>
+
+#define MAX 100
+
+class Stack
+{
+    int arr[MAX];
+    int top;
+
+public:
+    Stack()
+    {
+        top = -1;
+    }
+
+    int isEmpty()
+    {
+        if (top == -1)
+            return 1;
+        else
+            return 0;
+    }
+
+    int isFull()
+    {
+        if (top == MAX - 1)
+            return 1;
+        else
+            return 0;
+    }
+
+    void push(int x)
+    {
+        if (isFull())
+        {
+            cout << "Stack Overflow! Cannot push " << x << endl;
+            return;
+        }
+        arr[++top] = x;
+        cout << x << " pushed to stack." << endl;
+    }
+
+    void pop()
+    {
+        if (isEmpty())
+        {
+            cout << "Stack Underflow! Nothing to pop." << endl;
+            return;
+        }
+        cout << arr[top--] << " popped from stack." << endl;
+    }
+
+    void peek()
+    {
+        if (isEmpty())
+        {
+            cout << "Stack is empty." << endl;
+            return;
+        }
+        cout << "Top element is: " << arr[top] << endl;
+    }
+
+    void display()
+    {
+        int i;
+        if (isEmpty())
+        {
+            cout << "Stack is empty." << endl;
+            return;
+        }
+
+        cout << "Stack elements from top to bottom: ";
+        for (i = top; i >= 0; i--)
+            cout << arr[i] << " ";
+        cout << endl;
+    }
+};
+
+void main()
+{
+    Stack s;
+    int choice, value;
+
+    clrscr();
+
+    do
+    {
+        cout << "\nStack Operations Menu\n";
+        cout << "1. Push\n2. Pop\n3. Peek\n4. Display\n5. Exit\n";
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            cout << "Enter value to push: ";
+            cin >> value;
+            s.push(value);
+            break;
+
+        case 2:
+            s.pop();
+            break;
+
+        case 3:
+            s.peek();
+            break;
+
+        case 4:
+            s.display();
+            break;
+
+        case 5:
+            cout << "Exiting program...";
+            break;
+
+        default:
+            cout << "Invalid choice!";
+        }
+
+    } while (choice != 5);
+
+    getch();
+}
+
+
+
+
+
+
+
+
+

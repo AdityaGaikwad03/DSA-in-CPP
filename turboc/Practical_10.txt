@@ -1,0 +1,94 @@
+// Practical 10: Implement BFS for graph traversal.
+
+
+
+
+
+#include <iostream.h>
+#include <conio.h>
+
+#define MAX 4
+
+int graph[MAX][MAX] =
+{
+    {0, 1, 1, 0},
+    {1, 0, 0, 1},
+    {1, 0, 0, 1},
+    {0, 1, 1, 0}
+};
+
+int visited[MAX];
+int queue[MAX];
+int front = 0, rear = -1;
+
+void enqueue(int v)
+{
+    queue[++rear] = v;
+}
+
+int dequeue()
+{
+    return queue[front++];
+}
+
+int isEmpty()
+{
+    if (front > rear)
+        return 1;
+    else
+        return 0;
+}
+
+void bfs(int start)
+{
+    int i, v;
+
+    enqueue(start);
+    visited[start] = 1;
+
+    cout << "BFS Traversal: ";
+
+    while (!isEmpty())
+    {
+        v = dequeue();
+        cout << v << " ";
+
+        for (i = 0; i < MAX; i++)
+        {
+            if (graph[v][i] == 1 && visited[i] == 0)
+            {
+                visited[i] = 1;
+                enqueue(i);
+            }
+        }
+    }
+}
+
+void main()
+{
+    int i;
+
+    clrscr();
+
+    for (i = 0; i < MAX; i++)
+        visited[i] = 0;
+
+    bfs(0);
+
+    getch();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

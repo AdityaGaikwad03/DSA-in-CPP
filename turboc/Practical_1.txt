@@ -1,0 +1,122 @@
+// Practical 1: Write a program to perform insertion, deletion, searching and traversal in 1D array.
+
+
+#include <iostream.h>
+#include <conio.h>
+
+void traverseArray(int arr[], int size)
+{
+    int i;
+    cout << "Array elements: ";
+    for (i = 0; i < size; i++)
+        cout << arr[i] << " ";
+    cout << endl;
+}
+
+void insertElement(int arr[], int &size, int capacity, int element, int position)
+{
+    int i;
+    if (size == capacity || position < 0 || position > size)
+    {
+        cout << "Insertion failed!" << endl;
+        return;
+    }
+
+    for (i = size; i > position; i--)
+        arr[i] = arr[i - 1];
+
+    arr[position] = element;
+    size++;
+    cout << "Element inserted successfully!" << endl;
+}
+
+void deleteElement(int arr[], int &size, int position)
+{
+    int i;
+    if (position < 0 || position >= size)
+    {
+        cout << "Invalid position!" << endl;
+        return;
+    }
+
+    for (i = position; i < size - 1; i++)
+        arr[i] = arr[i + 1];
+
+    size--;
+    cout << "Element deleted successfully!" << endl;
+}
+
+void searchElement(int arr[], int size, int element)
+{
+    int i;
+    for (i = 0; i < size; i++)
+    {
+        if (arr[i] == element)
+        {
+            cout << "Element " << element << " found at position " << i << "." << endl;
+            return;
+        }
+    }
+    cout << "Element not found." << endl;
+}
+
+void main()
+{
+    const int capacity = 100;
+    int arr[capacity], size = 0;
+    int choice, element, position;
+
+    clrscr();
+
+    do
+    {
+        cout << "\nMenu:\n1.Traverse 2.Insert 3.Delete 4.Search 5.Exit";
+        cout << "\nEnter choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+            case 1:
+                traverseArray(arr, size);
+                break;
+
+            case 2:
+                cout << "Element to insert: ";
+                cin >> element;
+                cout << "Position (0-based): ";
+                cin >> position;
+                insertElement(arr, size, capacity, element, position);
+                break;
+
+            case 3:
+                cout << "Position to delete: ";
+                cin >> position;
+                deleteElement(arr, size, position);
+                break;
+
+            case 4:
+                cout << "Element to search: ";
+                cin >> element;
+                searchElement(arr, size, element);
+                break;
+
+            case 5:
+                cout << "Exiting...";
+                break;
+
+            default:
+                cout << "Invalid choice!";
+        }
+
+    } while (choice != 5);
+
+    getch();
+}
+
+
+
+
+
+
+
+
