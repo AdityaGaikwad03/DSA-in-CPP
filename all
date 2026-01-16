@@ -1,0 +1,1108 @@
+[15/01, 11:30 pm] Arinjay Clg: #include <iostream.h>
+#include <conio.h>
+
+void traverseArray(int arr[], int size)
+{
+    int i;
+    cout << "Array elements: ";
+    for (i = 0; i < size; i++)
+        cout << arr[i] << " ";
+    cout << endl;
+}
+
+void insertElement(int arr[], int &size, int capacity, int element, int position)
+{
+    int i;
+    if (size == capacity || position < 0 || position > size)
+    {
+        cout << "Insertion failed!" << endl;
+        return;
+    }
+
+    for (i = size; i > position; i--)
+        arr[i] = arr[i - 1];
+
+    arr[position] = element;
+    size++;
+    cout << "Element inserted successfully!" << endl;
+}
+
+void deleteElement(int arr[], int &size, int position)
+{
+    int i;
+    if (position < 0 || position >= size)
+    {
+        cout << "Invalid position!" << endl;
+        return;
+    }
+
+    for (i = position; i < size - 1; i++)
+        arr[i] = arr[i + 1];
+
+    size--;
+    cout << "Element deleted successfully!" << endl;
+}
+
+void searchElement(int arr[], int size, int element)
+{
+    int i;
+    for (i = 0; i < size; i++)
+    {
+        if (arr[i] == element)
+        {
+            cout << "Element " << element << " found at position " << i << "." << endl;
+            return;
+        }
+    }
+    cout << "Element not found." << endl;
+}
+
+void main()
+{
+    const int capacity = 100;
+    int arr[capacity], size = 0;
+    int choice, element, position;
+
+    clrscr();
+
+    do
+    {
+        cout << "\nMenu:\n1.Traverse 2.Insert 3.Delete 4.Search 5.Exit";
+        cout << "\nEnter choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+            case 1:
+                traverseArray(arr, size);
+                break;
+
+            case 2:
+                cout << "Element to insert: ";
+                cin >> element;
+                cout << "Position (0-based): ";
+                cin >> position;
+                insertElement(arr, size, capacity, element, position);
+                break;
+
+            case 3:
+                cout << "Position to delete: ";
+                cin >> position;
+                deleteElement(arr, size, position);
+                break;
+
+            case 4:
+                cout << "Element to search: ";
+                cin >> element;
+                searchElement(arr, size, element);
+                break;
+
+            case 5:
+                cout << "Exiting...";
+                break;
+
+            default:
+                cout << "Invalid choice!";
+        }
+
+    } while (choice != 5);
+
+    getch();
+}
+[15/01, 11:30 pm] Arinjay Clg: #include <iostream.h>
+#include <conio.h>
+
+#define MAX 100
+
+class Queue
+{
+    int arr[MAX];
+    int front, rear, capacity;
+
+public:
+    Queue(int size)
+    {
+        capacity = size;
+        front = -1;
+        rear = -1;
+    }
+
+    int isFull()
+    {
+        if (rear == capacity - 1)
+            return 1;
+        else
+            return 0;
+    }
+
+    int isEmpty()
+    {
+        if (front == -1 || front > rear)
+            return 1;
+        else
+            return 0;
+    }
+
+    void enqueue(int val)
+    {
+        if (isFull())
+        {
+            cout << "Queue Overflow. Cannot insert " << val << endl;
+            return;
+        }
+
+        if (isEmpty())
+            front = 0;
+
+        arr[++rear] = val;
+        cout << val << " enqueued to queue." << endl;
+    }
+
+    void dequeue()
+    {
+        if (isEmpty())
+        {
+            cout << "Queue Underflow. No element to dequeue." << endl;
+            return;
+        }
+
+        cout << arr[front++] << " dequeued from queue." << endl;
+
+        if (front > rear)
+        {
+            front = rear = -1;
+        }
+    }
+
+    void display()
+    {
+        int i;
+        if (isEmpty())
+        {
+            cout << "Queue is empty." << endl;
+            return;
+        }
+
+        cout << "Queue elements: ";
+        for (i = front; i <= rear; i++)
+            cout << arr[i] << " ";
+        cout << endl;
+    }
+};
+
+void main()
+{
+    int size, choice, val;
+    Queue q(1);   // temporary object
+
+    clrscr();
+
+    cout << "Enter queue capacity: ";
+    cin >> size;
+
+    Queue q1(size);   // actual queue
+
+    do
+    {
+        cout << "\n1. Enqueue\n2. Dequeue\n3. Display\n4. Exit";
+        cout << "\nEnter choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            cout << "Enter value to enqueue: ";
+            cin >> val;
+            q1.enqueue(val);
+            break;
+
+        case 2:
+            q1.dequeue();
+            break;
+
+        case 3:
+            q1.display();
+            break;
+
+        case 4:
+            cout << "Exiting...";
+            break;
+
+        default:
+            cout << "Invalid choice!";
+        }
+
+    } while (choice != 4);
+
+    getch();
+}
+[15/01, 11:30 pm] Arinjay Clg: #include <iostream.h>
+#include <conio.h>
+#include <ctype.h>
+#include <string.h>
+
+#define MAX 100
+
+char stackOp[MAX];
+int topOp = -1;
+
+int stackVal[MAX];
+int topVal = -1;
+
+/* Stack functions for operators */
+void pushOp(char x)
+{
+    stackOp[++topOp] = x;
+}
+
+char popOp()
+{
+    return stackOp[topOp--];
+}
+
+char peekOp()
+{
+    return stackOp[topOp];
+}
+
+int isEmptyOp()
+{
+    if (topOp == -1)
+        return 1;
+    else
+        return 0;
+}
+
+/* Stack functions for values */
+void pushVal(int x)
+{
+    stackVal[++topVal] = x;
+}
+
+int popVal()
+{
+    return stackVal[topVal--];
+}
+
+/* Precedence */
+int precedence(char op)
+{
+    if (op == '+' || op == '-')
+        return 1;
+    if (op == '*' || op == '/')
+        return 2;
+    if (op == '^')
+        return 3;
+    return 0;
+}
+
+/* Infix to Postfix */
+void infixToPostfix(char infix[], char postfix[])
+{
+    int i, k = 0;
+    char ch;
+
+    for (i = 0; infix[i] != '\0'; i++)
+    {
+        ch = infix[i];
+
+        if (isdigit(ch))
+        {
+            postfix[k++] = ch;
+        }
+        else if (ch == '(')
+        {
+            pushOp(ch);
+        }
+        else if (ch == ')')
+        {
+            while (!isEmptyOp() && peekOp() != '(')
+            {
+                postfix[k++] = popOp();
+            }
+            popOp();   // remove '('
+        }
+        else
+        {
+            while (!isEmptyOp() && precedence(peekOp()) >= precedence(ch))
+            {
+                postfix[k++] = popOp();
+            }
+            pushOp(ch);
+        }
+    }
+
+    while (!isEmptyOp())
+    {
+        postfix[k++] = popOp();
+    }
+
+    postfix[k] = '\0';
+}
+
+/* Evaluate Postfix */
+int evaluatePostfix(char postfix[])
+{
+    int i, a, b, res;
+    char ch;
+
+    for (i = 0; postfix[i] != '\0'; i++)
+    {
+        ch = postfix[i];
+
+        if (isdigit(ch))
+        {
+            pushVal(ch - '0');
+        }
+        else
+        {
+            b = popVal();
+            a = popVal();
+
+            switch (ch)
+            {
+            case '+': pushVal(a + b); break;
+            case '-': pushVal(a - b); break;
+            case '*': pushVal(a * b); break;
+            case '/': pushVal(a / b); break;
+            case '^':
+                res = 1;
+                while (b > 0)
+                {
+                    res = res * a;
+                    b--;
+                }
+                pushVal(res);
+                break;
+            }
+        }
+    }
+    return popVal();
+}
+
+void main()
+{
+    char infix[50], postfix[50];
+    int result;
+
+    clrscr();
+
+    cout << "Enter infix expression (single digit operands): ";
+    cin >> infix;
+
+    infixToPostfix(infix, postfix);
+
+    cout << "Postfix: " << postfix << endl;
+
+    result = evaluatePostfix(postfix);
+
+    cout << "Result: " << result;
+
+    getch();
+}
+[15/01, 11:30 pm] Arinjay Clg: #include <iostream.h>
+#include <conio.h>
+
+#define MAX 100
+
+class Stack
+{
+    int arr[MAX];
+    int top;
+
+public:
+    Stack()
+    {
+        top = -1;
+    }
+
+    int isEmpty()
+    {
+        if (top == -1)
+            return 1;
+        else
+            return 0;
+    }
+
+    int isFull()
+    {
+        if (top == MAX - 1)
+            return 1;
+        else
+            return 0;
+    }
+
+    void push(int x)
+    {
+        if (isFull())
+        {
+            cout << "Stack Overflow! Cannot push " << x << endl;
+            return;
+        }
+        arr[++top] = x;
+        cout << x << " pushed to stack." << endl;
+    }
+
+    void pop()
+    {
+        if (isEmpty())
+        {
+            cout << "Stack Underflow! Nothing to pop." << endl;
+            return;
+        }
+        cout << arr[top--] << " popped from stack." << endl;
+    }
+
+    void peek()
+    {
+        if (isEmpty())
+        {
+            cout << "Stack is empty." << endl;
+            return;
+        }
+        cout << "Top element is: " << arr[top] << endl;
+    }
+
+    void display()
+    {
+        int i;
+        if (isEmpty())
+        {
+            cout << "Stack is empty." << endl;
+            return;
+        }
+
+        cout << "Stack elements from top to bottom: ";
+        for (i = top; i >= 0; i--)
+            cout << arr[i] << " ";
+        cout << endl;
+    }
+};
+
+void main()
+{
+    Stack s;
+    int choice, value;
+
+    clrscr();
+
+    do
+    {
+        cout << "\nStack Operations Menu\n";
+        cout << "1. Push\n2. Pop\n3. Peek\n4. Display\n5. Exit\n";
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            cout << "Enter value to push: ";
+            cin >> value;
+            s.push(value);
+            break;
+
+        case 2:
+            s.pop();
+            break;
+
+        case 3:
+            s.peek();
+            break;
+
+        case 4:
+            s.display();
+            break;
+
+        case 5:
+            cout << "Exiting program...";
+            break;
+
+        default:
+            cout << "Invalid choice!";
+        }
+
+    } while (choice != 5);
+
+    getch();
+}
+[15/01, 11:30 pm] Arinjay Clg: #include <iostream.h>
+#include <conio.h>
+#include <stdlib.h>
+
+struct Node
+{
+    int data;
+    struct Node *prev;
+    struct Node *next;
+};
+
+struct Node *head = NULL;
+
+/* Insert at End */
+void insertEnd(int value)
+{
+    struct Node *newNode, *temp;
+
+    newNode = (struct Node *)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+    newNode->prev = NULL;
+
+    if (head == NULL)
+    {
+        head = newNode;
+        return;
+    }
+
+    temp = head;
+    while (temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+    newNode->prev = temp;
+}
+
+/* Delete by value */
+void deleteNode(int value)
+{
+    struct Node *temp;
+    temp = head;
+
+    while (temp != NULL && temp->data != value)
+        temp = temp->next;
+
+    if (temp == NULL)
+        return;
+
+    if (temp->prev != NULL)
+        temp->prev->next = temp->next;
+    else
+        head = temp->next;
+
+    if (temp->next != NULL)
+        temp->next->prev = temp->prev;
+
+    free(temp);
+}
+
+/* Traverse Forward */
+void traverseForward()
+{
+    struct Node *temp = head;
+    while (temp != NULL)
+    {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+    cout << endl;
+}
+
+/* Traverse Backward */
+void traverseBackward()
+{
+    struct Node *temp = head;
+
+    if (temp == NULL)
+        return;
+
+    while (temp->next != NULL)
+        temp = temp->next;
+
+    while (temp != NULL)
+    {
+        cout << temp->data << " ";
+        temp = temp->prev;
+    }
+    cout << endl;
+}
+
+void main()
+{
+    clrscr();
+
+    insertEnd(10);
+    insertEnd(20);
+    insertEnd(30);
+
+    cout << "Forward: ";
+    traverseForward();
+
+    cout << "Backward: ";
+    traverseBackward();
+
+    deleteNode(20);
+
+    cout << "After deletion (forward): ";
+    traverseForward();
+
+    cout << "After deletion (backward): ";
+    traverseBackward();
+
+    getch();
+}
+[15/01, 11:30 pm] Arinjay Clg: #include <iostream.h>
+#include <conio.h>
+#include <stdlib.h>
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+void insertAtBeginning(struct Node *&head, int value)
+{
+    struct Node *newNode;
+    newNode = (struct Node *)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = head;
+    head = newNode;
+}
+
+void insertAtEnd(struct Node *&head, int value)
+{
+    struct Node *newNode, *temp;
+    newNode = (struct Node *)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (head == NULL)
+    {
+        head = newNode;
+        return;
+    }
+
+    temp = head;
+    while (temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+}
+
+void insertAtPosition(struct Node *&head, int value, int position)
+{
+    int i;
+    struct Node *newNode, *temp;
+
+    if (position <= 1)
+    {
+        insertAtBeginning(head, value);
+        return;
+    }
+
+    newNode = (struct Node *)malloc(sizeof(struct Node));
+    newNode->data = value;
+
+    temp = head;
+    for (i = 1; i < position - 1 && temp != NULL; i++)
+        temp = temp->next;
+
+    if (temp == NULL)
+    {
+        cout << "Position out of bounds. Inserting at end." << endl;
+        insertAtEnd(head, value);
+        free(newNode);
+        return;
+    }
+
+    newNode->next = temp->next;
+    temp->next = newNode;
+}
+
+void display(struct Node *head)
+{
+    struct Node *temp;
+
+    if (head == NULL)
+    {
+        cout << "List is empty." << endl;
+        return;
+    }
+
+    temp = head;
+    while (temp != NULL)
+    {
+        cout << temp->data << " -> ";
+        temp = temp->next;
+    }
+    cout << "NULL" << endl;
+}
+
+void main()
+{
+    struct Node *head = NULL;
+    int choice, value, pos;
+
+    clrscr();
+
+    while (1)
+    {
+        cout << "\nMenu:\n";
+        cout << "1. Insert at Beginning\n";
+        cout << "2. Insert at End\n";
+        cout << "3. Insert at Position\n";
+        cout << "4. Display\n";
+        cout << "5. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            cout << "Enter value to insert at beginning: ";
+            cin >> value;
+            insertAtBeginning(head, value);
+            break;
+
+        case 2:
+            cout << "Enter value to insert at end: ";
+            cin >> value;
+            insertAtEnd(head, value);
+            break;
+
+        case 3:
+            cout << "Enter value to insert: ";
+            cin >> value;
+            cout << "Enter position: ";
+            cin >> pos;
+            insertAtPosition(head, value, pos);
+            break;
+
+        case 4:
+            display(head);
+            break;
+
+        case 5:
+            cout << "Exiting...";
+            getch();
+            return;
+
+        default:
+            cout << "Invalid choice!";
+        }
+    }
+}
+[15/01, 11:30 pm] Arinjay Clg: #include <iostream.h>
+#include <conio.h>
+
+#define MAX 20
+
+class CircularQueue
+{
+    int arr[MAX];
+    int front, rear, capacity;
+
+public:
+    CircularQueue(int size)
+    {
+        capacity = size;
+        front = -1;
+        rear = -1;
+    }
+
+    int isFull()
+    {
+        if (front == (rear + 1) % capacity)
+            return 1;
+        else
+            return 0;
+    }
+
+    int isEmpty()
+    {
+        if (front == -1)
+            return 1;
+        else
+            return 0;
+    }
+
+    void enqueue(int val)
+    {
+        if (isFull())
+        {
+            cout << "Overflow: Cannot insert " << val << endl;
+            return;
+        }
+
+        if (isEmpty())
+            front = rear = 0;
+        else
+            rear = (rear + 1) % capacity;
+
+        arr[rear] = val;
+        cout << val << " enqueued." << endl;
+    }
+
+    void dequeue()
+    {
+        if (isEmpty())
+        {
+            cout << "Underflow: No element to dequeue." << endl;
+            return;
+        }
+
+        cout << arr[front] << " dequeued." << endl;
+
+        if (front == rear)
+            front = rear = -1;
+        else
+            front = (front + 1) % capacity;
+    }
+
+    void display()
+    {
+        int i;
+        if (isEmpty())
+        {
+            cout << "Queue is empty." << endl;
+            return;
+        }
+
+        cout << "Queue elements: ";
+        i = front;
+        while (1)
+        {
+            cout << arr[i] << " ";
+            if (i == rear)
+                break;
+            i = (i + 1) % capacity;
+        }
+        cout << endl;
+    }
+};
+
+void main()
+{
+    int size, choice, val;
+
+    clrscr();
+
+    cout << "Enter queue capacity: ";
+    cin >> size;
+
+    CircularQueue cq(size);
+
+    do
+    {
+        cout << "\n1. Enqueue\n2. Dequeue\n3. Display\n4. Exit";
+        cout << "\nChoice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            cout << "Value: ";
+            cin >> val;
+            cq.enqueue(val);
+            break;
+
+        case 2:
+            cq.dequeue();
+            break;
+
+        case 3:
+            cq.display();
+            break;
+
+        case 4:
+            cout << "Exit...";
+            break;
+
+        default:
+            cout << "Invalid choice!";
+        }
+
+    } while (choice != 4);
+
+    getch();
+}
+[15/01, 11:30 pm] Arinjay Clg: #include <iostream.h>
+#include <conio.h>
+
+#define MAX 8   // Number of vertices
+
+char vertices[MAX] = {'A','B','C','D','E','F','G','H'};
+int graph[MAX][MAX] =
+{
+    /*A B C D E F G H */
+    {0,1,0,1,1,0,0,0}, // A
+    {1,0,1,0,0,0,0,0}, // B
+    {0,1,0,0,0,0,0,0}, // C
+    {1,0,0,0,0,0,0,0}, // D
+    {1,0,0,0,0,1,0,0}, // E
+    {0,0,0,0,1,0,1,1}, // F
+    {0,0,0,0,0,1,0,0}, // G
+    {0,0,0,0,0,1,0,0}  // H
+};
+
+int visited[MAX];
+int queue[MAX];
+int front = 0, rear = -1;
+
+/* Enqueue */
+void enqueue(int v)
+{
+    queue[++rear] = v;
+}
+
+/* Dequeue */
+int dequeue()
+{
+    return queue[front++];
+}
+
+int isEmpty()
+{
+    if (front > rear)
+        return 1;
+    else
+        return 0;
+}
+
+/* BFS */
+void bfs(int start)
+{
+    int i, v;
+
+    enqueue(start);
+    visited[start] = 1;
+
+    cout << "BFS Traversal starting from A: ";
+
+    while (!isEmpty())
+    {
+        v = dequeue();
+        cout << vertices[v] << " ";
+
+        for (i = 0; i < MAX; i++)
+        {
+            if (graph[v][i] == 1 && visited[i] == 0)
+            {
+                visited[i] = 1;
+                enqueue(i);
+            }
+        }
+    }
+}
+
+void main()
+{
+    int i;
+    clrscr();
+
+    for (i = 0; i < MAX; i++)
+        visited[i] = 0;
+
+    bfs(0);   // Start from A (index 0)
+
+    getch();
+}
+[15/01, 11:30 pm] Arinjay Clg: #include <iostream.h>
+#include <conio.h>
+#include <stdlib.h>
+
+struct Node
+{
+    int data;
+    struct Node *left;
+    struct Node *right;
+};
+
+/* Create new node */
+struct Node* createNode(int val)
+{
+    struct Node *newNode;
+    newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = val;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+
+/* Insert into BST */
+struct Node* insert(struct Node* root, int val)
+{
+    if (root == NULL)
+        return createNode(val);
+
+    if (val < root->data)
+        root->left = insert(root->left, val);
+    else if (val > root->data)
+        root->right = insert(root->right, val);
+
+    return root;
+}
+
+/* Inorder Traversal */
+void inorder(struct Node* root)
+{
+    if (root != NULL)
+    {
+        inorder(root->left);
+        cout << root->data << " ";
+        inorder(root->right);
+    }
+}
+
+/* Preorder Traversal */
+void preorder(struct Node* root)
+{
+    if (root != NULL)
+    {
+        cout << root->data << " ";
+        preorder(root->left);
+        preorder(root->right);
+    }
+}
+
+/* Postorder Traversal */
+void postorder(struct Node* root)
+{
+    if (root != NULL)
+    {
+        postorder(root->left);
+        postorder(root->right);
+        cout << root->data << " ";
+    }
+}
+
+void main()
+{
+    struct Node *root = NULL;
+
+    clrscr();
+
+    root = insert(root, 50);
+    root = insert(root, 30);
+    root = insert(root, 70);
+    root = insert(root, 20);
+    root = insert(root, 40);
+    root = insert(root, 60);
+    root = insert(root, 80);
+
+    cout << "Inorder traversal of BST: ";
+    inorder(root);
+    cout << endl;
+
+    cout << "Preorder traversal of BST: ";
+    preorder(root);
+    cout << endl;
+
+    cout << "Postorder traversal of BST: ";
+    postorder(root);
+    cout << endl;
+
+    getch();
+}
+[15/01, 11:30 pm] Arinjay Clg: #include <iostream.h>
+#include <conio.h>
+#include <stdlib.h>
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+/* Create new node */
+struct Node* create
